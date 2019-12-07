@@ -95,5 +95,30 @@ struct DSU
 	}
 };
 
+//Another DSU template
+
+struct DSU {
+	vector<int> par;
+	int comps;
+	DSU(int n) {
+		par.resize(n);
+		iota(par.begin(), par.end(), 0);
+		comps = n;
+	}
+	int find(int u) {
+		if (par[u] == u) return u;
+		return par[u] = find(par[u]);
+	}
+	void merge(int u, int v) {
+		u = find(u), v = find(v);
+		if (u != v) {
+			par[u] = v;
+			comps--;
+		}
+	}
+};
+
+DSU dsu(n) , n = initial size of components
+
 //Problem 1 (DSU + Divide and Conquer): https://codeforces.com/contest/813/problem/F
 //Solution 1: https://codeforces.com/contest/813/submission/48548930
