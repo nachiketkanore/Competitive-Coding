@@ -120,22 +120,5 @@ struct DSU {
 
 DSU dsu(n) , n = initial size of components
 
-//Another one 
-class DisjointSet{ 
-
-public:
-
-    vector<int> parent;
-
-    DisjointSet(int n): parent(n) { for(int i=0; i<n; i++) parent[i] = i; }
-
-    void join(int a, int b) { parent[find(b)] = find(a); }
-
-    int find(int a){ return a == parent[a] ? a : parent[a] = find(parent[a]); }
-
-    bool check(int a, int b){ return find(a) == find(b); }
-
-};
-
 //Problem 1 (DSU + Divide and Conquer): https://codeforces.com/contest/813/problem/F
 //Solution 1: https://codeforces.com/contest/813/submission/48548930
