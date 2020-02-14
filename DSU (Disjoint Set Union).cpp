@@ -76,13 +76,17 @@ struct DSU
 	{
 		return sz[getPar(k)];
 	}
+	
+	bool same(int u , int v){
+		return (getPar(u) == getPar(v));
+	}
 
-	void unite(int u, int v)
+	bool unite(int u, int v)
 	{
 		int par1=getPar(u), par2=getPar(v);
 
 		if(par1==par2)
-			return;
+			return false;
 
 		connected--;
 
@@ -92,6 +96,7 @@ struct DSU
 		sz[par2]+=sz[par1];
 		sz[par1]=0;
 		par[par1]=par[par2];
+		return true;
 	}
 };
 
