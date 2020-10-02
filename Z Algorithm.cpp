@@ -1,26 +1,41 @@
-//Logic = https://cp-algorithms.com/string/z-function.html
+ 
 
-//The Z-function for this string is an array of length n where the i-th element is equal to the greatest number 
-//of characters starting from the position i that coincide with the first characters of s.
+//IMP: IF YOU WANT TO FIND SUCH PREFIX WHICH ALSO PRESENT AT END ,EG. ADRYTAD, HERE ITS AD SO DIRECTLY USE WITHOUT USING TO_FIND ...
+AS THE WORK OF Z ALGORITHM IS TO FIND HOW MUCH STRING STARTING FROM CURRENT INDEX MATCHES WITH THE PREFIX ... SO THATS WHY INSERTING '$'
+ENSURES THE WORK OF PATTERN MATCHING BY ENDING THE MATCH IF WHOLE STRING IS MATCHED
 
-vector<int> z_function(string &s)
+*****NOTE:IF YOU WANT TO FIND IN GIVEN STRING ITS PRESENT IN INDEX FIND.LENGTH()+I AS FIRST CHARACTERS OF Z-ARRAY ARE FIND STRING AND CHARACTER '$'...
+vector<ll> zalgo(string to_find,string given)
 {
-	int n=s.size();
-	vector<int> z(n);
-	for(int i=1,l=0,r=0;i<n;i++)
-	{
-		if(i<=r)
-			z[i]=min(r-i+1, z[i-l]);
-		while(i+z[i]<n && s[z[i]]==s[i+z[i]])
-			z[i]++;
-		if(i+z[i]-1>r)
-			l=i, r=i+z[i]-1;
-	}
-	return z;
+	// if we have to only use given string ====== z[0]=given.length();
+    string total="";
+    total=to_find;
+    total+='$';
+    total+=given;
+	vector<ll>z(total.size()+2);
+    ll l,r; l=r=0;ll tot_len=total.size();
+    for(ll i=1;i<tot_len;i++)
+    {
+        if(r<i)
+        {
+            l=r=i;
+            while(r<tot_len && total[r]==total[r-l])r++;
+            z[i]=r-l;r--;
+        }
+        else
+        {
+            ll k=i-l;
+            if(z[k]<r-i+1)
+            {
+                z[i]=z[k];
+            }
+            else
+            {
+                l=i;
+                while(r<tot_len && total[r]==total[r-l])r++;
+                z[i]=r-l;r--;
+            }
+        }         
+    }
+return z;
 }
-
-//Sample Problem 1: http://codeforces.com/problemset/problem/127/D
-//Sample Solution 1: http://codeforces.com/contest/127/submission/39791421
-
-//Sample Problem 2: http://codeforces.com/contest/432/problem/D
-//Sample Solution 2: http://codeforces.com/contest/432/submission/39791526
